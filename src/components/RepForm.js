@@ -3,15 +3,23 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const RepForm = ({ onSubmit }) => {
+  const [reps, setReps] = useState('');
   const [restTime, setRestTime] = useState('');
   const [activeTime, setActiveTime] = useState('');
+
+  const [repsError, setRepsError] = useState('');
   const [restTimeError, setRestTimeError] = useState('');
   const [activeTimeError, setActiveTimeError] = useState('');
+
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ restTime: parseInt(restTime), activeTime: parseInt(activeTime) });
+    onSubmit({
+      restTime: parseInt(restTime),
+      activeTime: parseInt(activeTime),
+      reps: parseInt(reps)
+    });
     navigate('/');
   };
 
@@ -35,7 +43,23 @@ const RepForm = ({ onSubmit }) => {
     }
   };
 
-  const isDisabled = restTime.trim() === '' || activeTime.trim() === '' || restTimeError !== '' || activeTimeError !== '';
+  const handleRepsChange = (e) => {
+    const value = e.target.value;
+    if (value === '' || /^\d+$/.test(value)) {
+      setReps(value);
+      setRepsError('');
+    } else {
+      setRepsError('Amount of reps must be a non-negative integer.');
+    }
+  };
+
+  const isDisabled =
+    restTime.trim() === '' ||
+    activeTime.trim() === '' ||
+    reps.trim() === '' ||
+    restTimeError !== '' ||
+    activeTimeError !== '' ||
+    repsError !== '';
 
   return (
     <form onSubmit={handleSubmit}>
@@ -58,6 +82,16 @@ const RepForm = ({ onSubmit }) => {
           onChange={handleRestTimeChange}
         />
         {restTimeError && <div style={{ color: 'red' }}>{restTimeError}</div>}
+      </div>
+      <div>
+        <label htmlFor="reps">Reps (amount):</label>
+        <input
+          type="number"
+          id="reps"
+          value={reps}
+          onChange={handleRepsChange}
+        />
+        {repsError && <div style={{ color: 'red' }}>{repsError}</div>}
       </div>
       <button type="submit" disabled={isDisabled}>
         Submit
