@@ -6,10 +6,12 @@ const Timer = ({ activeTime, restTime, reps }) => {
   const [isPaused, setIsPaused] = useState(false);
   const [repsCompleted, setRepsCompleted] = useState(0);
 
+  const [repsMessage, setRepsMessage] = useState('');
+
   useEffect(() => {
     let interval;
 
-    if (!isPaused) {
+    if (!isPaused && repsCompleted < reps) {
       interval = setInterval(() => {
         setTime((prevTime) => {
           if (prevTime === 0) {
@@ -17,6 +19,11 @@ const Timer = ({ activeTime, restTime, reps }) => {
               // If it's transitioning from active to rest time
               setIsResting(true);
               setRepsCompleted((prevReps) => prevReps + 1/2); // Increment reps
+              if (repsCompleted === reps - 1) {
+                // Pause the timer when reps are completed
+                setIsPaused(true);
+                setRepsMessage('You Finished!');
+              }
               return restTime;
             } else {
               // If it's transitioning from rest to active time
@@ -30,7 +37,7 @@ const Timer = ({ activeTime, restTime, reps }) => {
     }
 
     return () => clearInterval(interval);
-  }, [activeTime, isPaused, restTime, isResting]); // Removed reps from the dependency array
+  }, [activeTime, isPaused, restTime, isResting, reps, repsCompleted]);
 
   const handlePauseClick = () => {
     setIsPaused((prevPaused) => !prevPaused);
@@ -39,6 +46,7 @@ const Timer = ({ activeTime, restTime, reps }) => {
   return (
     <div>
       <h2>{isResting ? 'Rest Time' : 'Active Time'}</h2>
+      <h2>{repsMessage ? 'You Finished!' : ''}</h2>
       <div>Time: {time}s</div>
       <div>Reps Completed: {repsCompleted}/{reps}</div>
       <button onClick={handlePauseClick}>{isPaused ? 'Resume' : 'Pause'}</button>
