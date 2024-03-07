@@ -1,4 +1,7 @@
+// Timer.js
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../styles/Timer.css'; // Import your CSS file for styling
 
 const Timer = ({ activeTime, restTime, reps }) => {
   const [time, setTime] = useState(activeTime);
@@ -7,6 +10,12 @@ const Timer = ({ activeTime, restTime, reps }) => {
   const [repsCompleted, setRepsCompleted] = useState(0);
 
   const [repsMessage, setRepsMessage] = useState('');
+
+  const navigate = useNavigate();
+
+  const handleOnClick = () => {
+    navigate('/repForm')
+  }
 
   useEffect(() => {
     let interval;
@@ -44,12 +53,15 @@ const Timer = ({ activeTime, restTime, reps }) => {
   };
 
   return (
-    <div>
-      <h2>{isResting ? 'Rest Time' : 'Active Time'}</h2>
-      <h2>{repsMessage ? repsMessage : ''}</h2>
-      <div>Time: {time}s</div>
-      <div>Reps Completed: {repsCompleted}/{reps}</div>
-      <button onClick={handlePauseClick}>{isPaused ? 'Resume' : 'Pause'}</button>
+    <div className="timer-container">
+      <h2 className="title">{isResting ? 'Rest Time' : 'Active Time'}</h2>
+      <h2 className="message">{repsMessage ? repsMessage : ''}</h2>
+      <div className="time">Time: {time}s</div>
+      <div className="reps">Reps Completed: {repsCompleted}/{reps}</div>
+      <div className="button-container">
+        <button className={`button pause-button`} onClick={handlePauseClick}>{isPaused ? 'Resume' : 'Pause'}</button>
+        <button className={`button navigate-button`} onClick={handleOnClick}>Set Timers & Reps</button>
+      </div>
     </div>
   );
 };

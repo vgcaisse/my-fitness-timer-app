@@ -1,6 +1,7 @@
 // RepForm.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../styles/RepForm.css'; // Import your CSS file for styling
 
 const RepForm = ({ onSubmit }) => {
   const [reps, setReps] = useState('');
@@ -62,38 +63,41 @@ const RepForm = ({ onSubmit }) => {
     repsError !== '';
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="activeTime">Active Time (seconds):</label>
+    <form className="form-container" onSubmit={handleSubmit}>
+      <div className="form-group">
+        <label htmlFor="activeTime" className="label">Active Time (seconds):</label>
         <input
           type="number"
           id="activeTime"
           value={activeTime}
           onChange={handleActiveTimeChange}
+          className="input"
         />
-        {activeTimeError && <div style={{ color: 'red' }}>{activeTimeError}</div>}
+        {activeTimeError && <div className="error">{activeTimeError}</div>}
       </div>
-      <div>
-        <label htmlFor="restTime">Rest Time (seconds):</label>
+      <div className="form-group">
+        <label htmlFor="restTime" className="label">Rest Time (seconds):</label>
         <input
           type="number"
           id="restTime"
           value={restTime}
           onChange={handleRestTimeChange}
+          className="input"
         />
-        {restTimeError && <div style={{ color: 'red' }}>{restTimeError}</div>}
+        {restTimeError && <div className="error">{restTimeError}</div>}
       </div>
-      <div>
-        <label htmlFor="reps">Reps (amount):</label>
+      <div className="form-group">
+        <label htmlFor="reps" className="label">Reps (amount):</label>
         <input
           type="number"
           id="reps"
           value={reps}
           onChange={handleRepsChange}
+          className="input"
         />
-        {repsError && <div style={{ color: 'red' }}>{repsError}</div>}
+        {repsError && <div className="error">{repsError}</div>}
       </div>
-      <button type="submit" disabled={isDisabled}>
+      <button type="submit" disabled={isDisabled} className="submit-button">
         Submit
       </button>
     </form>

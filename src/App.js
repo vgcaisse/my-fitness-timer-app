@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import './App.css'; // Import your CSS file for styling
+
+// Components
 import Timer from './components/Timer';
 import RepForm from './components/RepForm';
 
@@ -12,7 +15,7 @@ const App = () => {
 
   return (
     <Router>
-      <div>
+      <div className="container">
         <Routes>
           <Route path="/repForm" element={<RepForm onSubmit={handleFormSubmit} />} />
           <Route
@@ -20,7 +23,12 @@ const App = () => {
             element={
               <>
                 {timerData.restTime === 0 && timerData.activeTime === 0 ? (
-                  <div>Please add a timer to start the timers</div>
+                  <div className="card">
+                    <h1>Please add your timers and reps to start</h1>
+                    <Link to="/repForm" className="button">
+                      Set Timers & Reps
+                    </Link>
+                  </div>
                 ) : (
                   <Timer {...timerData} />
                 )}
@@ -28,8 +36,6 @@ const App = () => {
             }
           />
         </Routes>
-
-        <Link to="/repForm">New Timers</Link>
       </div>
     </Router>
   );
