@@ -46,7 +46,7 @@ const Timer = ({ activeTime, restTime, reps }) => {
   return (
     <div>
       <h2>{isResting ? 'Rest Time' : 'Active Time'}</h2>
-      <h2>{repsMessage ? 'You Finished!' : ''}</h2>
+      <h2>{repsMessage ? repsMessage : ''}</h2>
       <div>Time: {time}s</div>
       <div>Reps Completed: {repsCompleted}/{reps}</div>
       <button onClick={handlePauseClick}>{isPaused ? 'Resume' : 'Pause'}</button>
