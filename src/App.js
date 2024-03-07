@@ -1,14 +1,13 @@
-// App.js
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Timer from './components/Timer';
 import RepForm from './components/RepForm';
 
 const App = () => {
-  const [times, setTimes] = useState({ restTime: 0, activeTime: 0 });
+  const [timerData, setTimerData] = useState({ restTime: 0, activeTime: 0, reps: 0 });
 
-  const handleFormSubmit = ({ restTime, activeTime }) => {
-    setTimes({ restTime, activeTime });
+  const handleFormSubmit = ({ restTime, activeTime, reps }) => {
+    setTimerData({ restTime, activeTime, reps });
   };
 
   return (
@@ -20,10 +19,10 @@ const App = () => {
             path="/"
             element={
               <>
-                {times.restTime === 0 && times.activeTime === 0 ? (
+                {timerData.restTime === 0 && timerData.activeTime === 0 ? (
                   <div>Please add a timer to start the timers</div>
                 ) : (
-                  <Timer restTime={times.restTime} activeTime={times.activeTime} />
+                  <Timer {...timerData} />
                 )}
               </>
             }
@@ -37,4 +36,3 @@ const App = () => {
 };
 
 export default App;
-

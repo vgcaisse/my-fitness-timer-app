@@ -8,7 +8,7 @@ const Timer = ({ activeTime, restTime, reps }) => {
 
   useEffect(() => {
     let interval;
-
+    console.log(reps);
     if (!isPaused) {
       interval = setInterval(() => {
         setTime((prevTime) => {
@@ -23,7 +23,7 @@ const Timer = ({ activeTime, restTime, reps }) => {
     }
 
     return () => clearInterval(interval);
-  }, [activeTime, isPaused, restTime, isResting, reps]); // Removed repsCompleted from dependency array
+  }, [activeTime, isPaused, restTime, isResting]); // Removed reps from dependency array
 
   const handlePauseClick = () => {
     setIsPaused((prevPaused) => !prevPaused);
