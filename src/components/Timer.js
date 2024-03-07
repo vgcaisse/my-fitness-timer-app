@@ -27,7 +27,7 @@ const Timer = ({ activeTime, restTime, reps }) => {
             if (!isResting) {
               // If it's transitioning from active to rest time
               setIsResting(true);
-              setRepsCompleted((prevReps) => prevReps + 1/2); // Increment reps
+              setRepsCompleted((prevReps) => prevReps + 1); // Increment reps
               if (repsCompleted === reps - 1) {
                 // Pause the timer when reps are completed
                 setIsPaused(true);
